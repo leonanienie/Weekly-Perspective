@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小品每周观察 - 2026-06-23</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #1A5276; --blue-dark: #0D3B5E; --blue-light: #D4E6F1;
+  --blue-ultra-light: #EBF5FB; --bg: #F2F6FA; --card-bg: #FFFFFF;
+  --text: #1C2833; --text-secondary: #566573; --text-muted: #99A3A4;
+  --border: #D5D8DC; --shadow: 0 2px 16px rgba(26,82,118,0.10);
+  --shadow-hover: 0 8px 30px rgba(26,82,118,0.20);
+  --radius: 16px; --radius-sm: 8px;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+  --font: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+.hero { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 30%, #2471A3 60%, #2E86C1 100%); padding: 48px 20px 40px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content:''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 25% 40%, rgba(255,255,255,0.12) 0%, transparent 50%), radial-gradient(circle at 75% 60%, rgba(255,255,255,0.08) 0%, transparent 50%); animation: shimmer 10s ease-in-out infinite; }
+@keyframes shimmer { 0%,100% { transform: translate(0,0); } 50% { transform: translate(1.5%,0.8%); } }
+.hero-content { position: relative; z-index: 1; }
+.hero h1 { font-size: 2.4em; font-weight: 800; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.2); letter-spacing: 3px; margin-bottom: 8px; }
+.hero .subtitle { font-size: 1.0em; color: rgba(255,255,255,0.88); font-weight: 500; letter-spacing: 1px; }
+.hero .date-badge { display: inline-block; margin-top: 14px; background: rgba(255,255,255,0.9); color: var(--blue); padding: 5px 20px; border-radius: 20px; font-size: 0.92em; font-weight: 600; backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.stats-bar { display: flex; justify-content: center; gap: 40px; padding: 20px 20px; background: var(--card-bg); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 1.6em; font-weight: 700; color: var(--blue); }
+.stat-label { font-size: 0.82em; color: var(--text-muted); margin-top: 3px; }
+.tag-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; justify-content: center; background: var(--card-bg); border-bottom: 1px solid var(--border); }
+.tag-filter { padding: 5px 15px; border-radius: 16px; font-size: 0.82em; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: #fff; color: var(--text-secondary); transition: var(--transition); user-select: none; }
+.tag-filter:hover { border-color: var(--blue); color: var(--blue-dark); background: var(--blue-ultra-light); }
+.tag-filter.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.tag-filter .count { margin-left: 4px; opacity: 0.7; font-size: 0.85em; }
+.container { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 20px; }
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 0; box-shadow: var(--shadow); border: 1px solid var(--border); transition: var(--transition); display: flex; flex-direction: column; overflow: hidden; }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); border-color: var(--blue); }
+.card.hidden { display: none; }
+.card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; background: linear-gradient(135deg, var(--blue-ultra-light) 0%, #FFFFFF 100%); border-bottom: 1.5px solid var(--blue-light); }
+.section-badge { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1em; font-weight: 700; flex-shrink: 0; box-shadow: 0 2px 8px rgba(26,82,118,0.25); }
+.section-info { flex: 1; display: flex; align-items: center; gap: 8px; }
+.section-icon { font-size: 1.3em; }
+.section-title { font-size: 1.1em; font-weight: 700; color: var(--blue-dark); letter-spacing: 0.5px; }
+.card-body { padding: 20px 22px 22px; }
+.item-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.73em; font-weight: 600; letter-spacing: 0.3px; }
+.tag-us-china { background: #E8EAF6; color: #283593; }
+.tag-geopolitics { background: #FCE4EC; color: #C62828; }
+.tag-cooperation { background: #E0F2F1; color: #00695C; }
+.tag-economy { background: #FFF3E0; color: #E65100; }
+.tag-governance { background: #E3F2FD; color: #1565C0; }
+.tag-thinktank { background: #F3E5F5; color: #7B1FA2; }
+.tag-diplomacy { background: #E8F5E9; color: #2E7D32; }
+.tag-europe { background: #ECEFF1; color: #37474F; }
+.tag-indopacific { background: #E0F7FA; color: #00838F; }
+.tag-bri { background: #FFF8E1; color: #F9A825; }
+.item-title { font-size: 1.0em; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.55; }
+.item-summary { font-size: 0.9em; color: var(--text-secondary); line-height: 1.75; margin-bottom: 14px; text-align: justify; }
+.item-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.8em; color: var(--text-muted); flex-wrap: wrap; gap: 8px; }
+.item-source { display: flex; align-items: center; gap: 6px; }
+.source-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue-light); flex-shrink: 0; }
+.item-link { color: var(--blue); text-decoration: none; font-weight: 600; font-size: 0.88em; padding: 5px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--blue); transition: var(--transition); white-space: nowrap; }
+.item-link:hover { background: var(--blue); color: #fff; }
+.footer { text-align: center; padding: 28px 20px; color: var(--text-muted); font-size: 0.84em; border-top: 1px solid var(--border); margin-top: 10px; background: var(--card-bg); }
+.footer .brand { color: var(--blue); font-weight: 600; }
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.6em; letter-spacing: 1px; }
+  .hero .subtitle { font-size: 0.88em; }
+  .card-grid { grid-template-columns: 1fr; }
+  .stats-bar { gap: 20px; }
+  .stat-num { font-size: 1.3em; }
+  .card-header { padding: 14px 16px; }
+  .card-body { padding: 16px 16px 18px; }
+  .section-badge { width: 36px; height: 36px; font-size: 0.95em; }
+  .section-title { font-size: 1.0em; }
+}
+@media (min-width: 641px) { .card:nth-child(7):last-child { grid-column: 1 / -1; max-width: 560px; justify-self: center; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-content">
+    <h1>📋 小品每周观察</h1>
+    <p class="subtitle">中国 · 亚洲 · 世界 — 权威观点精选</p>
+    <span class="date-badge">📅 2026年06月16日 — 2026年06月23日</span>
+  </div>
+</header>
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">核心板块</div></div>
+  <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">精选观点</div></div>
+  <div class="stat-item"><div class="stat-num">15</div><div class="stat-label">权威来源</div></div>
+</div>
+<div class="tag-filter-bar" id="tagFilterBar">
+  <span class="tag-filter active" data-tag="all">全部<span class="count">7</span></span>
+  <span class="tag-filter" data-tag="中美关系">#中美关系<span class="count">1</span></span>
+  <span class="tag-filter" data-tag="地缘安全">#地缘安全<span class="count">2</span></span>
+  <span class="tag-filter" data-tag="区域合作">#区域合作<span class="count">2</span></span>
+  <span class="tag-filter" data-tag="全球经济">#全球经济<span class="count">1</span></span>
+  <span class="tag-filter" data-tag="全球治理">#全球治理<span class="count">2</span></span>
+  <span class="tag-filter" data-tag="智库研判">#智库研判<span class="count">2</span></span>
+  <span class="tag-filter" data-tag="外交动向">#外交动向<span class="count">1</span></span>
+  <span class="tag-filter" data-tag="欧美关系">#欧美关系<span class="count">1</span></span>
+  <span class="tag-filter" data-tag="一带一路">#一带一路<span class="count">1</span></span>
+  <span class="tag-filter" data-tag="印太">#印太<span class="count">1</span></span>
+</div>
+<main class="container">
+  <div class="card-grid" id="cardGrid">
+
+    <!-- ===== 板块 01：中美战略核心观点 ===== -->
+    <div class="card" data-tags="中美关系,智库研判,外交动向" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">01</div>
+        <div class="section-info">
+          <span class="section-icon">🌐</span>
+          <span class="section-title">中美战略核心观点</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-us-china">#中美关系</span>
+          <span class="tag tag-thinktank">#智库研判</span>
+          <span class="tag tag-diplomacy">#高层互动</span>
+        </div>
+        <div class="item-title">"竞争性共存"第三条路：中美关系进入"有边界的博弈"新阶段</div>
+        <div class="item-summary">
+          清华大学战略与安全研究中心主任达巍在6月22日社科院主办的中美智库对话会上提出"竞争性共存的第三条路"——核心理念是建立"有边界的博弈"。判断当前中美关系正稳步迈向长期稳定新阶段，5月特朗普二次访华确立的"建设性战略稳定关系"定位是重要制度成果。6月2日启动的300亿美元非敏感商品降税释放了缓和信号，但中国现代国际关系研究院陈凤英警示"精准脱钩"风险仍存——中美在高科技领域的分割仍在加速。布鲁金斯学会同期发布报告指出，伊朗冲突正使中国在全球治理领域获得更大的"稳定锚"角色，美国信誉受损为中国战略主动创造了新空间。<b>核心启示：博弈边界正从模糊走向清晰，但真正考验在于激烈竞争中维护稳定。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>清华大学战略与安全研究中心、中国社科院、Brookings · 6月16-23日</span></span>
+          <a class="item-link" href="https://ciss.tsinghua.edu.cn/info/wzjx/11528" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 02：东亚/东北亚地缘 ===== -->
+    <div class="card" data-tags="地缘安全,印太,智库研判" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">02</div>
+        <div class="section-info">
+          <span class="section-icon">🏯</span>
+          <span class="section-title">东亚 / 东北亚地缘</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-geopolitics">#地缘安全</span>
+          <span class="tag tag-indopacific">#印太</span>
+          <span class="tag tag-thinktank">#智库研判</span>
+        </div>
+        <div class="item-title">日菲"三海联动"东移博弈场：中国启动台海以东专项执法</div>
+        <div class="item-summary">
+          本周最显著的地缘变化来自台海以东。日本首相高市早苗与菲律宾总统马科斯5月底启动正式海上边界谈判（涉及台东水域专属经济区），中国6月7日出动闽粤海警编队启动"海上交通执法专项行动"，对过往商船实施问询查验。分析人士将此描述为"三海联动"（台海-南海-东海）战略的升级——日本试图巩固第一岛链领导角色、菲律宾希望转移南海压力。与此同时，朝鲜半岛局势持续紧绷：朝鲜3月修宪正式将韩国定义为"主要敌对实体"并宣布为"负责任的核武国家"，金与正明确表示核地位不可谈判。日本防卫预算创纪录达到9万亿日元，美日扩大导弹联合生产。韩国总统李在明6月8日表态——深化韩日军演须以日本就殖民历史道歉为前提，三国安全合作仍受历史问题制约。<b>趋势判断：东北亚安全格局正从"朝鲜半岛单一焦点"演变为"台海-半岛-东海三热点并行"的复杂态势。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>China Daily、Malay Mail、New Age BD、灼见名家 · 6月7-22日</span></span>
+          <a class="item-link" href="http://www.chinadaily.com.cn/a/202606/11/WS6a2ab310a310d6866eb4dcb8.html" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 03：东南亚与东盟合作 ===== -->
+    <div class="card" data-tags="区域合作,外交动向" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">03</div>
+        <div class="section-info">
+          <span class="section-icon">🌏</span>
+          <span class="section-title">东南亚与东盟合作</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-cooperation">#区域合作</span>
+          <span class="tag tag-diplomacy">#外交动向</span>
+          <span class="tag tag-governance">#全球治理</span>
+        </div>
+        <div class="item-title">东盟秘书长高金洪提五项优先合作：南海COC磋商有望年内完成</div>
+        <div class="item-summary">
+          在6月22日雅加达举行的中国-东盟全面战略伙伴关系5周年论坛上，东盟秘书长高金洪系统提出五项对华合作优先事项——和平与稳定（含南海行为准则COC谈判）、数字化转型与创新、能源合作与能源安全、跨国威胁应对（网络犯罪与人口贩运）、人文互联互通。高金洪明确表示双方正着眼于"今年内完成COC谈判"，称之为"重要信号与坚定承诺"。菲律宾外长拉萨罗同步披露，COC月度谈判已启动（由此前季度升频），但范围界定、法律约束力、与2002年宣言的关系、参考条件等四项核心争议仍有待解决。经济维度上，中国-东盟前5月贸易额达3.52万亿元同比增16.6%，CAFTA 3.0版升级议定书即将实施，首次将数字经济与绿色经济纳入制度框架。第23届东博会定于9月17-21日在南宁举行，主题为"共享3.0机遇，共创美好生活"。<b>核心判断：政治安全与经济合作形成双向驱动，东盟正成为全球最具活力的区域合作增长极。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>广西新闻网、CGTN、PhilStar、中国贸促会 · 6月22-23日</span></span>
+          <a class="item-link" href="http://www.gx.chinanews.com.cn/dmsz/2026-06-23/detail-ihfftkrx9675296.shtml" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 04：中亚、上合、周边安全 ===== -->
+    <div class="card" data-tags="区域合作,地缘安全,全球治理" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">04</div>
+        <div class="section-info">
+          <span class="section-icon">🏔️</span>
+          <span class="section-title">中亚、上合、周边安全</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-cooperation">#区域合作</span>
+          <span class="tag tag-geopolitics">#地缘安全</span>
+          <span class="tag tag-governance">#全球治理</span>
+        </div>
+        <div class="item-title">上合25周年：四大安全中心加速建设，"中亚核心"定位进一步夯实</div>
+        <div class="item-summary">
+          上合组织在成立25周年之际迎来机制建设密集推进期。6月5日比什凯克内政部长会议确立联合反恐、网络安全、禁毒、边境管控四大优先方向，巴基斯坦与俄、塔、乌、吉、哈五国签署多项双边安全协议。6月12日杜尚别"中亚—上合组织核心"国际会议上，塔吉克斯坦外长穆赫里丁强调中亚区域稳定"直接助力上合组织行稳致远"。中国驻吉大使刘江平披露本年度比什凯克峰会三大议程——维护地区安全稳定、促进区域发展繁荣、完善全球治理体系——其中四大安全中心（综合中心+信息安全中心+打击跨国有组织犯罪中心+禁毒中心）建设最受关注。智库层面，6月7-8日上海上合智库论坛聚焦阿富汗恐怖主义外溢风险——2025年11月针对中国公民的恐袭加深了各方对安全机制提速的共同期待。哈萨克斯坦安全会议秘书与中国政法委书记陈文清6月1日会晤，系统构建中哈安全对话框架。<b>趋势：上合正从"安全共同体"向"安全+发展+治理"综合平台升级。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>人民网、SCO官网、China Daily、CGTN · 6月1-23日</span></span>
+          <a class="item-link" href="https://world.people.com.cn/n1/2026/0623/c1002-40745787.html" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 05：欧美全球治理、对华研判 ===== -->
+    <div class="card" data-tags="欧美关系,智库研判,地缘安全" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">05</div>
+        <div class="section-info">
+          <span class="section-icon">🏛️</span>
+          <span class="section-title">欧美全球治理、对华研判</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-europe">#欧美关系</span>
+          <span class="tag tag-thinktank">#智库研判</span>
+          <span class="tag tag-geopolitics">#地缘安全</span>
+        </div>
+        <div class="item-title">G7连续两年无法发表联合公报：西方"去风险"共识遭遇欧洲战略中立化挑战</div>
+        <div class="item-summary">
+          6月下旬法国埃维昂G7峰会连续第二年未能发表联合公报（仅发布9份技术性成果文件），暴露西方内部三大结构性撕裂——贸易（美威胁对欧汽车征25%关税）、防务（美撤军评估与增军费要求并行）、中东立场（欧洲谴责以色列在黎巴嫩军事升级）。在对华政策上，德、法、西班牙正带头反对欧盟层面强制拆除华为设备的禁令（若全面执行，将耗资3678亿欧元）。布鲁金斯学会报告指出伊朗冲突使中国在全球治理真空地带角色增强；剑桥大学研究团队在《欧洲国际安全学刊》提出"认知鸿沟"概念——中国已将"去风险"框架从根本上否定为美国主导的遏制策略。查塔姆研究所副研究员马亚尔将欧盟工业加速法案定性为"某种复杂的保护主义"。德国联邦经济发展和对外贸易协会主席舒曼提出"战略中立"概念——欧洲真正需要的是界定自身利益的能力，而非卷入阵营对抗。<b>趋势：欧洲对华政策正从"追随美国"走向"三足鼎立"——德国务实派、法国战略自主派、东欧亲美派三方博弈加剧。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>FT、Brookings、Chatham House、Cambridge、人大重阳 · 6月5-22日</span></span>
+          <a class="item-link" href="https://news.sina.cn/bignews/insight/2026-06-22/detail-iniehmvs0265143.d.html" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 06：全球经济、贸易、产业链 ===== -->
+    <div class="card" data-tags="全球经济,区域合作,智库研判" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">06</div>
+        <div class="section-info">
+          <span class="section-icon">📊</span>
+          <span class="section-title">全球经济、贸易、产业链权威声音</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-economy">#全球经济</span>
+          <span class="tag tag-cooperation">#区域合作</span>
+          <span class="tag tag-thinktank">#智库研判</span>
+        </div>
+        <div class="item-title">《全球供应链促进报告2026》：供应链全球化仍是大势，"韧性为王"时代来临</div>
+        <div class="item-summary">
+          第四届链博会首发《全球供应链促进报告2026》揭示：2018-2025年全球供应链四大核心指数持续上行（促进指数年复合增16.07%、创新指数14.40%、连接指数7.48%、韧性指数3.23%），但韧性增幅最小且最为脆弱。报告首次纳入美国与欧盟韧性分指数，呈现"美高欧低→美缓欧快"的新态势（2025年欧盟韧性指数上涨5.76%首次逆转）。IMF/世行6月最新展望将东亚太平洋2026年增长锁定约4.4%，但警告伊朗冲突引发的能源价格冲击正迫使亚洲能源进口国（菲律宾、马来西亚等）收紧货币政策，叠加美国关税与中国结构性放缓构成多重下行风险。WTO货物贸易指标仍维持101.7的扩张态势，AI相关产品贡献全球贸易增长超40%，台湾地区5月出口增51.7%、韩国增53.2%均创纪录。中国连续作为全球唯一拥有全工业门类的国家，在供应链多元化重构中被确认为全球"稳定锚点"。<b>核心判断：供应链逻辑正从"效率优先"向"安全+绿色+智能"三维驱动深刻转型。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>第四届链博会报告、人民网、央视经济、IMF/WB · 6月22-23日</span></span>
+          <a class="item-link" href="http://finance.people.com.cn/n1/2026/0623/c1004-40745499.html" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 板块 07：全球治理/一带一路/三大倡议 ===== -->
+    <div class="card" data-tags="全球治理,一带一路,区域合作" tabindex="0">
+      <div class="card-header">
+        <div class="section-badge">07</div>
+        <div class="section-info">
+          <span class="section-icon">🕊️</span>
+          <span class="section-title">全球治理 / 一带一路 / 三大倡议</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="item-tags">
+          <span class="tag tag-governance">#全球治理</span>
+          <span class="tag tag-bri">#一带一路</span>
+          <span class="tag tag-cooperation">#区域合作</span>
+        </div>
+        <div class="item-title">国新办发布全球治理白皮书：四大倡议体系成型，全球治理倡议已获近160国欢迎</div>
+        <div class="item-summary">
+          国务院新闻办公室6月17日发布《构建更加公正合理的全球治理体系：中国的理念、倡议与行动》白皮书，系统呈现中国以"四大倡议"（全球发展倡议、全球安全倡议、全球文明倡议、全球治理倡议）为支柱的全球治理方案。外交部长王毅披露：全球发展倡议下已实施1800+合作项目、完成8万人次培训，所有建交的非洲和最不发达国家均享受零关税待遇；全球治理倡议已获近160个国家和国际组织欢迎。同期进展密集：商务部与国际贸易中心（ITC）15日续签"一带一路"合作谅解备忘录（聚焦数字经济、绿色矿产、南南合作）；中蒙外长15日会谈签署2026-2027年合作计划；中巴"全球治理倡议与中巴经济走廊"研讨会9-10日在伊斯兰堡举行。新华网6月18-19日播发系列评论"为推进全球治理事业展现中国担当"，强调中国在和平、发展、安全、信任"四大赤字"持续扩大背景下践行真正多边主义。<b>战略信号：中国正从参与者转向体系建设者，四大倡议形成从安全、发展到文明、治理的完整理念闭环。</b>
+        </div>
+        <div class="item-meta">
+          <span class="item-source"><span class="source-dot"></span><span>新华社、国新办、中国一带一路网、外交部 · 6月15-22日</span></span>
+          <a class="item-link" href="https://m.chinanews.com/wap/detail/chs/zw/10643672.shtml" target="_blank" rel="noopener">查看原文 →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <p>由 <span class="brand">📋 小品每周观察</span> 自动生成 · 资讯来源包括政府官网、顶尖智库、国际组织、权威媒体 · 仅供信息参考</p>
+  <p style="margin-top:4px;">Generated 2026-06-23 · 数据覆盖过去7天</p>
+</footer>
+
+<script>
+(function() {
+  var filterBar = document.getElementById('tagFilterBar');
+  var cards = document.querySelectorAll('.card');
+  filterBar.addEventListener('click', function(e) {
+    var tagEl = e.target.closest('.tag-filter');
+    if (!tagEl) return;
+    filterBar.querySelectorAll('.tag-filter').forEach(function(t) { t.classList.remove('active'); });
+    tagEl.classList.add('active');
+    var selectedTag = tagEl.dataset.tag;
+    cards.forEach(function(card) {
+      if (selectedTag === 'all') { card.classList.remove('hidden'); }
+      else { var cardTags = (card.dataset.tags || '').split(','); card.classList.toggle('hidden', cardTags.indexOf(selectedTag) === -1); }
+    });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      var visibleCards = Array.from(cards).filter(function(c) { return !c.classList.contains('hidden'); });
+      if (!visibleCards.length) return;
+      var current = document.activeElement;
+      var idx = visibleCards.indexOf(current);
+      if (e.key === 'ArrowRight' && idx < visibleCards.length - 1) { visibleCards[idx + 1].focus(); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' && idx > 0) { visibleCards[idx - 1].focus(); e.preventDefault(); }
+    }
+  });
+})();
+</script>
+</body>
+</html>
